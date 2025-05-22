@@ -56,3 +56,33 @@
   0% { transform: scale(1); }
   100% { transform: scale(1.06); }
 }
+
+.fh-heart {
+  animation-name: floating-heart;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-iteration-count: infinite;
+  left: var(--fh-left, 20vw);
+  z-index: 0;
+}
+@keyframes floating-heart {
+  0% {
+    transform: translateY(10vh) scale(1) rotate(0deg);
+    opacity: 0.7;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-110vh) scale(1.11) rotate(8deg);
+    opacity: 0;
+  }
+}
+
+/* Усиленный glow и дополнительная воздушность для главного блока */
+.main-love-block {
+  box-shadow: 0 6px 32px 0 #fecdd3a8, 0 2px 32px #ffe4e682;
+  border: 2.5px solid #fbcfe8;
+  background: linear-gradient(135deg, #fff0fb 0%, #fff8fa 80%);
+  backdrop-filter: blur(1.6px);
+}
