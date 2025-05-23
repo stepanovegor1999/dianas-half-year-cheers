@@ -8,7 +8,8 @@
     "build": "vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+	"deploy": "vite build && sudo rm -rf /var/www/dianochka/* && sudo cp -r dist/* /var/www/dianochka/ && sudo chown -R www-data:www-data /var/www/dianochka && sudo systemctl reload nginx"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",

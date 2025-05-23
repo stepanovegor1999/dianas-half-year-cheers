@@ -35,20 +35,65 @@
     --radius: 0.7rem;
   }
 
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: 330 15% 10%;
+      --foreground: 0 0% 98%;
+      --card: 330 20% 14%;
+      --card-foreground: 0 0% 98%;
+      --border: 330 20% 30%;
+    }
+
+    body::after {
+      background: radial-gradient(circle at top, #2e021b 0%, #1a0010 100%);
+    }
+  }
+
   body {
+    position: relative;
     font-family: "Playfair Display", serif;
-    background: linear-gradient(135deg, #ffe7fa 0%, #ffeaea 50%, #fccde2 100%);
+    background: none;
     @apply bg-background text-foreground min-h-screen;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image: url('/pattern-light-roses.svg');
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #ffe7fa 0%, #ffeaea 50%, #fccde2 100%);
+    z-index: -1;
+  }
+
+  h1, h2, h3 {
+    font-family: "Playfair Display", serif;
+    @apply text-pink-600 drop-shadow-sm;
+  }
+
+  p, span {
+    font-family: 'Inter', sans-serif;
+    @apply text-gray-700;
   }
 }
 
-/* Анимация выделения карточки при ховере */
+/* 💖 Hover-эффект масштабирования */
 .hover-scale {
   transition: transform 0.22s cubic-bezier(.22,1,.36,1);
 }
 .hover-scale:hover {
   transform: scale(1.047);
 }
+
+/* 💗 Анимация "пульс" */
 .pulse {
   animation: pulse 1.4s infinite alternate;
 }
@@ -57,32 +102,96 @@
   100% { transform: scale(1.06); }
 }
 
+/* 🌬️ Плавающие сердечки */
 .fh-heart {
+  position: absolute;
   animation-name: floating-heart;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
   animation-iteration-count: infinite;
   left: var(--fh-left, 20vw);
   z-index: 0;
+
+  transform: scale(var(--fh-scale, 1));
+  filter: blur(var(--fh-blur, 0px));
 }
+
 @keyframes floating-heart {
   0% {
-    transform: translateY(10vh) scale(1) rotate(0deg);
+    transform: translateY(0) translateX(0) scale(var(--fh-scale, 1)) rotate(0deg);
     opacity: 0.7;
   }
-  15% {
+  30% {
+    transform: translateY(-30vh) translateX(calc(var(--fh-x, 0vw) * 0.3)) scale(var(--fh-scale, 1.05)) rotate(4deg);
     opacity: 1;
   }
+  60% {
+    transform: translateY(-60vh) translateX(calc(var(--fh-x, 0vw) * 0.6)) scale(var(--fh-scale, 1.1)) rotate(-6deg);
+  }
   100% {
-    transform: translateY(-110vh) scale(1.11) rotate(8deg);
+    transform: translateY(-120vh) translateX(var(--fh-x, 0vw)) scale(var(--fh-scale, 1.12)) rotate(8deg);
     opacity: 0;
   }
 }
 
-/* Усиленный glow и дополнительная воздушность для главного блока */
+/* 🌟 Glow-кнопка */
+.glow-button {
+  background: linear-gradient(to right, #fda4af, #f472b6);
+  box-shadow: 0 0 12px #fecdd3cc;
+  transition: all 0.25s ease;
+}
+.glow-button:hover {
+  box-shadow: 0 0 24px #fb7185aa;
+  transform: scale(1.05);
+}
+
+/* ✨ Анимация появления */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out both;
+}
+
+/* 💎 Главный love-блок */
 .main-love-block {
+  max-width: 60rem; /* Шире (960px) */
+  padding-left: 2rem;
+  padding-right: 2rem;
   box-shadow: 0 6px 32px 0 #fecdd3a8, 0 2px 32px #ffe4e682;
   border: 2.5px solid #fbcfe8;
   background: linear-gradient(135deg, #fff0fb 0%, #fff8fa 80%);
   backdrop-filter: blur(1.6px);
+  border-radius: 1.6rem;
+}
+
+/* ✨ Блёстки */
+.sparkle {
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #ffffffcc 0%, transparent 80%);
+  border-radius: 50%;
+  position: absolute;
+  animation: sparkle-float 3s infinite ease-in-out;
+}
+
+@keyframes sparkle-float {
+  0% {
+    transform: translateY(0) scale(0.6) rotate(0deg);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-50px) scale(1.2) rotate(360deg);
+    opacity: 0;
+  }
 }
